@@ -1,25 +1,25 @@
 const express = require('express');
-const mysql = require('mysql');
-const dotenv = require('dotenv');
+// const mysql = require('mysql');
+// const dotenv = require('dotenv');
 const path = require('path');
-dotenv.config({ path: './.env' });
+// dotenv.config({ path: './.env' });
 const app = express();
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'oh_user_db'
-});
+// const db = mysql.createConnection({
+//   host: 'oh-database.ct1sms0qsen3.us-east-1.rds.amazonaws.com',
+//   user: 'admin',
+//   password: 'CloudMonkeys',
+//   database: 'oh_user_db'
+// });
 
 
-db.connect((error) => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('MySQL Connected...');
-  }
-});
+// db.connect((error) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('MySQL Connected...');
+//   }
+// });
 
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));

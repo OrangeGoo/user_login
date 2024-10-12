@@ -1,11 +1,16 @@
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+
+require('dotenv').config();
+
+
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'oh_user_db'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
 });
 
 exports.register = (req, res) => {
@@ -29,7 +34,7 @@ exports.register = (req, res) => {
     let hashedPassword = await bcrypt.hash(password, 8);
     console.log(hashedPassword);
 
-    db.query('INSERT INTO users SET ?', { user_id: user_id, last: last, first: first, email: email, password: hashedPassword, role_id: role_id }, (error, results) => {
+    db.query('INSERT INTO users SET ?', { user_id: user_id, last_name: last, first_name: first, email: email, password: hashedPassword, role_id: role_id }, (error, results) => {
       if (error) {
         console.log(error);
         return res.render('register', {
