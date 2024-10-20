@@ -65,10 +65,19 @@ exports.login = (req, res) => {
       return res.render('login', {
         message: 'Email or Password is incorrect'
       });
-    } else {
-      return res.render('login', {
-        message: 'Login successful'
-      });
-    }
-  });
-};
+    } 
+     const role = results[0].role_id;
+     const token = jwt.sign({ user_id: results[0].user_id, role: role }, process.env.JWT_SECRET, {
+      expiresIn: '1h'
+    });
+
+    res.status(200).json({
+      message: 'Login successful',
+      token: token,
+      role: role === 1 ? 'student' : 'teacher',
+      redirectUrl: role === 1 ? '/student/home' : '/teacher/home'
+    });
+   } 
+  )};
+
+
